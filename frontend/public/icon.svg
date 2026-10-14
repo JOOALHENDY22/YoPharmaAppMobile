@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064E3B" />
+      <stop offset="50%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#0F766E" />
+    </linearGradient>
+
+    <!-- Letter Y Left Arm Gradient (Crisp White to Clean Slate) -->
+    <linearGradient id="yLeftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+
+    <!-- Letter Y Right Arm Gradient (Electric Mint to Teal) -->
+    <linearGradient id="yRightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6EE7B7" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+
+    <!-- Medical Pill Base Gradient -->
+    <linearGradient id="pillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <!-- Deep Elevation Shadow -->
+    <filter id="appShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#022c22" flood-opacity="0.45" />
+    </filter>
+
+    <!-- Soft Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- App Squircle / Rounded Background -->
+  <rect width="512" height="512" rx="124" fill="url(#bgGrad)" />
+
+  <!-- Luxury Subtle Edge Border -->
+  <rect x="6" y="6" width="500" height="500" rx="120" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-opacity="0.15" />
+
+  <!-- Background Ambient Glow -->
+  <circle cx="256" cy="190" r="140" fill="#34D399" opacity="0.18" filter="blur(32px)" />
+
+  <!-- Main Symbol: Stylized Medical Letter "Y" & Clinical Cross -->
+  <g filter="url(#appShadow)">
+    
+    <!-- Left Arm of the "Y" (Curving into center) -->
+    <path d="M 130 110 
+             C 145 110, 160 120, 175 140 
+             L 230 230 
+             C 240 246, 250 256, 256 260 
+             C 250 240, 235 210, 215 175 
+             L 175 110 
+             Z" 
+          fill="url(#yLeftGrad)" />
+          
+    <path d="M 140 105 
+             C 170 105, 205 155, 256 245 
+             L 256 270 
+             C 230 240, 185 150, 140 105 Z" 
+          fill="#FFFFFF" opacity="0.9" />
+
+    <!-- Solid Geometric Letter Y Wings & Capsule Body -->
+    <!-- Left Branch -->
+    <rect x="135" y="115" width="54" height="150" rx="27" transform="rotate(-36 135 115)" fill="url(#yLeftGrad)" />
+    
+    <!-- Right Branch -->
+    <rect x="330" y="85" width="54" height="150" rx="27" transform="rotate(36 330 85)" fill="url(#yRightGrad)" />
+
+    <!-- Center Stem (Capsule Pill Base) -->
+    <rect x="229" y="240" width="54" height="165" rx="27" fill="url(#pillGrad)" />
+
+    <!-- Top Cap of Center Pill (White Half) -->
+    <path d="M 229 267 C 229 252, 241 240, 256 240 C 271 240, 283 252, 283 267 L 283 295 L 229 295 Z" fill="#FFFFFF" />
+
+    <!-- Medical Plus / Cross Accent in Center -->
+    <g transform="translate(256, 210)" filter="url(#glow)">
+      <!-- Cross Circle Badge -->
+      <circle cx="0" cy="0" r="44" fill="#064E3B" stroke="#34D399" stroke-width="4" />
+      <!-- Vertical bar -->
+      <rect x="-7" y="-24" width="14" height="48" rx="6" fill="#34D399" />
+      <!-- Horizontal bar -->
+      <rect x="-24" y="-7" width="48" height="14" rx="6" fill="#FFFFFF" />
+      <!-- Center dot -->
+      <circle cx="0" cy="0" r="4" fill="#064E3B" />
+    </g>
+
+    <!-- Pill divider ring -->
+    <rect x="224" y="325" width="64" height="6" rx="3" fill="#FFFFFF" opacity="0.75" />
+    
+  </g>
+
+  <!-- Sparkle Accent (Top Right) -->
+  <path d="M 390 120 Q 390 135 405 135 Q 390 135 390 150 Q 390 135 375 135 Q 390 135 390 120 Z" fill="#6EE7B7" opacity="0.85" />
+</svg>

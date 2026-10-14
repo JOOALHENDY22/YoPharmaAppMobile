@@ -1,0 +1,47 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Left Branch of Y -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 32,24 C 35,24 38,26 40,30 L 54,54 L 46,59 L 26,30 C 24,27 27,24 32,24 Z" />
+        
+    <!-- Right Branch of Y (Electric Mint) -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M 76,24 C 71,24 68,27 66,30 L 48,59 L 56,64 L 82,30 C 84,26 81,24 76,24 Z" />
+
+    <!-- Center Stem / Capsule Pill Body -->
+    <path
+        android:fillColor="#10B981"
+        android:pathData="M 47,52 L 61,52 L 61,78 C 61,82 58,85 54,85 C 50,85 47,82 47,78 Z" />
+
+    <!-- Top Cap of Pill (White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 47,52 L 61,52 L 61,64 L 47,64 Z" />
+
+    <!-- Medical Plus Badge in Center -->
+    <path
+        android:fillColor="#064E3B"
+        android:pathData="M 54,36 C 47.4,36 42,41.4 42,48 C 42,54.6 47.4,60 54,60 C 60.6,60 66,54.6 66,48 C 66,41.4 60.6,36 54,36 Z" />
+        
+    <!-- Cross Vertical Line (Mint) -->
+    <path
+        android:fillColor="#34D399"
+        android:pathData="M 52.5,42 L 55.5,42 L 55.5,54 L 52.5,54 Z" />
+
+    <!-- Cross Horizontal Line (White) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 48,46.5 L 60,46.5 L 60,49.5 L 48,49.5 Z" />
+
+    <!-- Pill Ring Divider -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 46,70 L 62,70 L 62,71.5 L 46,71.5 Z" />
+
+</vector>

@@ -1,0 +1,52 @@
+{
+  "name": "YoPharma | دليلك الدوائي وبدائل الصيدليات",
+  "short_name": "YoPharma",
+  "description": "تطبيق فحص وبدائل الأدوية في السوق المصري والتحقق السريري وأمان الحمل والأمراض المزمنة",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#059669",
+  "categories": ["medical", "health", "utilities"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "بحث عن دواء",
+      "short_name": "بحث",
+      "url": "/search",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "بدائل الأدوية",
+      "short_name": "البدائل",
+      "url": "/alternatives",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "أمان الحمل والأمراض",
+      "short_name": "الأمان",
+      "url": "/chronic-safety",
+      "icons": [{ "src": "/icon.svg", "sizes": "any" }]
+    }
+  ]
+}

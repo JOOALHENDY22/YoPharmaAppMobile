@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>YoPharma Drug Check | Complete Interactive Clinical Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --app-height: 100dvh;
+    }
+    body {
+      font-family: 'Cairo', 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: #060D17;
+      color: #F8FAFC;
+      height: 100dvh;
+      min-height: -webkit-fill-available;
+      touch-action: pan-y;
+    }
+    .slide {
+      display: none;
+      animation: fadeInSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .slide.active {
+      display: flex;
+    }
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(4px) scale(0.995); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="flex flex-col justify-between overflow-hidden select-none">
+
+  <!-- TOP HEADER -->
+  <header class="h-14 sm:h-16 border-b border-slate-800 bg-slate-900/95 px-3 sm:px-8 flex items-center justify-between z-30 shrink-0 shadow-lg">
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a href="/" target="_blank" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-teal-600 hover:bg-teal-500 text-white flex items-center justify-center font-black text-xs sm:text-base shadow-md transition-transform active:scale-95 shrink-0" title="الذهاب للرئيسية">
+        YP
+      </a>
+      <div class="truncate">
+        <div class="flex items-center gap-1.5 sm:gap-2">
+          <span class="font-black text-xs sm:text-lg text-white tracking-tight truncate">YoPharma <span class="text-teal-400 font-bold">Drug Check</span></span>
+          <span class="text-[9px] sm:text-xs bg-teal-950 border border-teal-700 text-teal-300 px-1.5 sm:px-2 py-0.5 rounded-full font-bold shrink-0">PharmaMind</span>
+        </div>
+        <span id="headerSub" class="text-[10px] sm:text-xs text-slate-400 hidden sm:inline font-medium">كلية الصيدلة • الجامعة المصرية الصينية (ECU)</span>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+      <button id="langToggleBtn" class="text-[11px] sm:text-sm bg-slate-800 hover:bg-slate-700 text-teal-300 border border-teal-800/80 px-2.5 sm:px-3 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1 shadow-sm">
+        <span id="langBtnText">🌐 English</span>
+      </button>
+
+      <span id="slideCounter" class="text-[11px] sm:text-sm font-mono bg-slate-950 text-teal-400 px-2.5 sm:px-3 py-1.5 rounded-lg font-bold border border-slate-800">
+        1 / 12
+      </span>
+
+      <a href="/YoPharma_Drug_Check_Presentation.pptx" download class="text-[11px] sm:text-sm bg-teal-600 hover:bg-teal-500 text-white px-2.5 sm:px-4 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1 shadow-md">
+        <span id="downloadBtnText" class="hidden sm:inline">تحميل PPTX</span>
+        <span class="sm:hidden">PPTX</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN SLIDE CANVAS -->
+  <main id="slideCanvas" class="flex-1 w-full max-w-7xl mx-auto p-3 sm:p-6 overflow-y-auto custom-scrollbar flex flex-col justify-start sm:justify-center relative">
+    <!-- Dynamic slide injection -->
+  </main>
+
+  <!-- SWIPE HINT ON MOBILE -->
+  <div class="sm:hidden w-full text-center pb-1">
+    <span class="text-[10px] text-slate-500 font-bold tracking-wide">👈 اسحب يميناً أو يساراً للتقليب 👉</span>
+  </div>
+
+  <!-- BOTTOM FIXED CONTROLS BAR -->
+  <footer class="h-16 border-t border-slate-800 bg-slate-900/98 px-3 sm:px-8 flex items-center justify-between z-30 shrink-0 shadow-2xl safe-area-bottom">
+    <button id="prevBtn" class="px-4 sm:px-6 py-2.5 rounded-xl bg-slate-800 active:bg-slate-700 text-slate-200 text-xs sm:text-sm font-bold transition-all disabled:opacity-20 flex items-center gap-1.5 shadow-sm active:scale-95">
+      <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      <span id="prevBtnText">السابق</span>
+    </button>
+
+    <!-- Slide Indicators -->
+    <div id="dotsContainer" class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto max-w-[42vw] px-1 py-1">
+      <!-- Injected by JS -->
+    </div>
+
+    <button id="nextBtn" class="px-5 sm:px-7 py-2.5 rounded-xl bg-teal-600 active:bg-teal-500 text-white text-xs sm:text-sm font-bold transition-all disabled:opacity-20 flex items-center gap-1.5 shadow-lg active:scale-95 ring-2 ring-teal-500/30">
+      <span id="nextBtnText">التالي</span>
+      <svg class="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+  </footer>
+
+  <!-- PRESENTATION SCRIPT -->
+  <script>
+    let currentSlide = 0;
+    let currentLang = 'ar';
+
+    // State for interactive modules inside slides
+    let selectedRxDrugs = ['Cipro', 'Antinal'];
+    let selectedVitalsMetric = 'creatinine';
+
+    const presentationData = {
+      ar: {
+        headerSub: "كلية الصيدلة • الجامعة المصرية الصينية (ECU)",
+        langBtn: "🌐 English",
+        downloadBtn: "تحميل PPTX",
+        prevBtn: "السابق",
+        nextBtn: "التالي",
+        slides: [
+          // 1. COVER
+          {
+            type: "cover",
+            badge: "كلية الصيدلة • الجامعة المصرية الصينية (ECU)",
+            title: "YoPharma Drug Check",
+            motto: "\"Search it. Understand it. Compare it. Check it.\"",
+            subtitle: "المنصة السريرية المتكاملة لفحص الروشتات، التداخلات، ومطابقة بدائل السوق المصري.",
+            meta: [
+              { label: "فريق العمل", val: "Team PharmaMind", sub: "Clinical Pharmacy Project" },
+              { label: "المجال التخصصي", val: "Clinical Decision Support", sub: "Pharmacology & AI" },
+              { label: "المؤسسة الأكاديمية", val: "الجامعة المصرية الصينية (ECU)", sub: "Faculty of Pharmacy" }
+            ],
+            footer: "نظام سريري متصل بأكثر من 15 ألف دواء مصري مع كاش فائق السرعة (< 1ms)."
+          },
+
+          // 2. THE PROBLEM
+          {
+            type: "problem",
+            tag: "المشكلة السريرية الواقعية",
+            title: "المشكلة: تشتت المصادر وبطء مراجعة الروشتة في الصيدلية",
+            p1: "عند استلام روشتة بها 3 إلى 5 أدوية، يحتاج الصيدلي لفحص 6 أبعاد حيوية: تداخلات الأدوية، توقيت الوجبات، موانع الأمراض المزمنة، ضبط الجرعات، وتوافر البدائل المصرية.",
+            p2: "المعلومات مبعثرة بين مراجع ورقية، مواقع أجنبية تجهل الأسماء المصرية، وقوائم أسعار صامتة، مما يجعل فحص الروشتة يستغرق 8-10 دقائق ويرفع احتمالية إغفال التداخلات الخطيرة.",
+            points: [
+              "1. المواقع الأجنبية لا تتعرف على الأسماء والتركيزات المصرية.",
+              "2. مراجع الـ PDF بطيئة جداً لحساب جرعات مرضى الكلى CrCl.",
+              "3. قوائم الأسعار المصرية لا توضح أي تداخل دوائي أو غذائي.",
+              "4. النتيجة: إرهاق ذهني للصيدلي وخطر صرف أدوية متعارضة."
+            ]
+          },
+
+          // 3. THE UNIFIED SOLUTION
+          {
+            type: "solution",
+            tag: "رؤية الحل الموحد",
+            title: "الحل: منصة واحدة متكاملة تجمع كافة الأدوات السريرية",
+            quote: "\"One platform to explore the medication, understand its risks, compare alternatives, and check the complete regimen in seconds.\"",
+            pillars: [
+              { num: "01", tag: "EXPLORE", title: "بحث فوري", desc: "استرجاع فوري لبيانات الدواء والاسم العلمي INN في أقل من 1ms." },
+              { num: "02", tag: "UNDERSTAND", title: "آلية الخطورة", desc: "شرح مسار التفاعل الفارماكولوجي (CYP450) وتصنيف صلب (🔴/🟠/🔵)." },
+              { num: "03", tag: "COMPARE", title: "البدائل والأسعار", desc: "مطابقة فورية للبدائل المصرية والشركات مع 3 فئات سعرية." },
+              { num: "04", tag: "CHECK", title: "فرز الروشتة", desc: "تحليل متزامن لكافة الأدوية والأغذية والأمراض المزمنة بضغطة زر." }
+            ]
+          },
+
+          // 4. TOOL 1: SEARCH & DRUG MONOGRAPH
+          {
+            type: "interactive_tool",
+            tag: "الخانة 1 • شريط البحث السريع والجرعات",
+            title: "1. البحث الذكي واسترجاع بيانات الدواء (Drug Lookup)",
+            problemTitle: "⚠️ المشكلة التي تحلها هذه الخانة:",
+            problemDesc: "صعوبة تذكر أسماء 15 ألف دواء بالاسم التجاري والعلمي في نفس الوقت والوصول الفوري للجرعات واستخدامات الدواء.",
+            solutionTitle: "✨ كيف تعمل في YoPharma؟",
+            solutionDesc: "شريط بحث متصل بكاش الذاكرة (< 1ms) مع إكمال تلقائي فوري يستجيب أثناء الكتابة أو اختيار الأدوية الشائعة.",
+            interactiveType: "search_demo"
+          },
+
+          // 5. TOOL 2: DRUG-DRUG INTERACTIONS
+          {
+            type: "interactive_tool",
+            tag: "الخانة 2 • فاحص التفاعلات الدوائية المتبادلة",
+            title: "2. فاحص التفاعلات الدوائية (Drug-Drug Interactions)",
+            problemTitle: "⚠️ المشكلة التي تحلها هذه الخانة:",
+            problemDesc: "تناول المريض لأكثر من دواء يسبب تفاعلات تعطل الامتصاص أو تزيد سمية الدواء بالدم دون علم المريض أو الطبيب.",
+            solutionTitle: "✨ كيف تعمل في YoPharma؟",
+            solutionDesc: "محاكي روشتة حي: اختر أو احذف الأدوية وشاهد كيف يقيم النظام التداخل والخطورة والتوصية في ثوانٍ معدودة.",
+            interactiveType: "interactions_demo"
+          },
+
+          // 6. TOOL 3: FOOD INTERACTIONS
+          {
+            type: "interactive_tool",
+            tag: "الخانة 3 • تفاعلات الأغذية ومواعيد الوجبات",
+            title: "3. مواعيد الوجبات والأغذية الممنوعة (Food-Drug Timing)",
+            problemTitle: "⚠️ المشكلة التي تحلها هذه الخانة:",
+            problemDesc: "أخذ الدواء مع الألبان أو عصير الجريب فروت يبطل مفعوله بنسبة 80% أو يسبب سمية خطيرة في الكبد.",
+            solutionTitle: "✨ كيف تعمل في YoPharma؟",
+            solutionDesc: "جدول زمني يحدد (قبل الأكل / مع الأكل / بعد الأكل) مع بطاقات تحذيرية حمراء للأطعمة والمشروبات المتعارضة لكل دواء.",
+            interactiveType: "food_demo"
+          },
+
+          // 7. TOOL 4: 22 VITAL SIGNS & BIOMARKERS
+          {
+            type: "interactive_tool",
+            tag: "الخانة 4 • دليل المقاييس والتحاليل المخبرية",
+            title: "4. دليل ومقيّم المقاييس الحيوية (22 Biomarkers)",
+            problemTitle: "⚠️ المشكلة التي تحلها هذه الخانة:",
+            problemDesc: "صعوبة تذكر النطاقات الطبيعية لـ 22 تحليلاً (eGFR, INR, HbA1c, CrCl) وتقييم خطورة نتائج تحاليل المريض في ثوانٍ.",
+            solutionTitle: "✨ كيف تعمل في YoPharma؟",
+            solutionDesc: "حاسبة ومقيّم رقمي متكامل: اختر نوع التحليل واكتب رقم النتيجة لترى التقييم السريري والتوصية الصيدلانية فوراً.",
+            interactiveType: "vitals_demo"
+          },
+
+          // 8. TOOL 5: EGYPTIAN ALTERNATIVES
+          {
+            type: "interactive_tool",
+            tag: "الخانة 5 • دليل البدائل والمثائل في السوق المصري",
+            title: "5. دليل البدائل والشركات والأسعار (Egyptian Generics)",
+            problemTitle: "⚠️ المشكلة التي تحلها هذه الخانة:",
+            problemDesc: "نقص الأدوية المستوردة وغلاء أسعارها، مع صعوبة حصر البدائل المصرية المتطابقة في المادة الفعالة وسعرها.",
+            solutionTitle: "✨ كيف تعمل في YoPharma؟",
+            solutionDesc: "اختر أي دواء أصلي لاستخراج بدائله المصرية بنفس المادة الفعالة مع الشركات المصنعة وتصنيف لـ 3 فئات سعرية.",
+            interactiveType: "alternatives_demo"
+          },
+
+          // 9. TOOL 6: CHRONIC DISEASE SAFETY
+          {
+            type: "interactive_tool",
+            tag: "الخانة 6 • أمان وموانع استعمال الأمراض المزمنة",
+            title: "6. أمان الأمراض المزمنة وضبط الجرعات (Chronic Safety)",
+            problemTitle: "⚠️ المشكلة التي تحلها هذه الخانة:",
+            problemDesc: "صرف أدوية شائعة لمرضى الضغط أو السكري أو القصور الكلوي مما يسبب تدهوراً حاداً في الكلى أو ارتفاع الضغط.",
+            solutionTitle: "✨ كيف تعمل في YoPharma؟",
+            solutionDesc: "اختر الدواء والحالة المرضية المزمنة للمريض لتقييم الأمان (آمن / تحذير / ممنوع تماماً) مع البديل المقترح.",
+            interactiveType: "chronic_demo"
+          },
+
+          // 10. TOOL 7: SIDE-BY-SIDE COMPARISON
+          {
+            type: "interactive_tool",
+            tag: "الخانة 7 • مصفوفة المقارنة الدوائية المباشرة",
+            title: "7. المقارنة المباشرة وجهاً لوجه (Side-by-Side)",
+            problemTitle: "⚠️ المشكلة التي تحلها هذه الخانة:",
+            problemDesc: "الحيرة في اختيار الدواء الأنسب بين دوائين من نفس العائلة (مثل Concor vs Tenormin) ومعرفة فروق الآثار الجانبية.",
+            solutionTitle: "✨ كيف تعمل في YoPharma؟",
+            solutionDesc: "اختر المقارنة التي تريدها لترى جدولاً تفصيلياً يوضح المادة الفعالة، مسار التخلص الحيوي، والتوصية السريرية المباشرة.",
+            interactiveType: "compare_demo"
+          },
+
+          // 11. REAL CLINICAL CASE
+          {
+            type: "clinical_case",
+            tag: "تطبيق سريري واقعي متكامل",
+            title: "حالة واقعية: روشتة مريض ضغط وقصور كلوي (Cipro + Antinal + Concor)",
+            profile: "مريض يبلغ 62 عاماً يعاني من ارتفاع ضغط الدم وقصور كلوي (CKD Stage 3, eGFR = 38 mL/min).",
+            findings: [
+              { badge: "🔴 تداخل دوائي: Cipro ↔ Antinal", desc: "التصاق وامتصاص معوي ناقص ➔ التوصية: فصل الجرعات بساعتين على الأقل." },
+              { badge: "🍽️ تداخل غذائي: Ciprofloxacin + الألبان", desc: "الكالسيوم يبطل 75% من امتصاص الدواء ➔ التوصية: يؤخذ على معدة فارغة." },
+              { badge: "🛡️ موانع القصور الكلوي: Cipro في CKD Stage 3", desc: "انخفاض التخلص الكلوي ➔ التوصية: خفض الجرعة بنسبة 50% (250mg مرتين يومياً)." }
+            ]
+          },
+
+          // 12. FINAL TEAM SLIDE
+          {
+            type: "team_slide",
+            tag: "فريق العمل والأثر الأكاديمي",
+            title: "YoPharma Drug Check",
+            motto: "\"Search it. Understand it. Compare it. Check it.\"",
+            teamTitle: "🏆 فريق العمل المشارك في تطوير وتصميم المنصة (Team PharmaMind):",
+            members: [
+              { name: "يوسف محمد", role: "الهندسة البرمجية والربط بالذكاء الاصطناعي (Full-Stack & AI)" },
+              { name: "نور عبدالمجيد", role: "البحث الصيدلاني ومصفوفة التداخلات الدوائية (Clinical Pharmacy)" },
+              { name: "رنا ماهر", role: "قاعدة بيانات الأدوية والبدائل المصرية (Egyptian Drug DB)" },
+              { name: "وفاء طه", role: "المقاييس الحيوية والنطاقات المخبرية (Biomarkers & Labs)" },
+              { name: "نور جمال", role: "تفاعلات الأغذية وإرشادات الوجبات (Food-Drug Timing)" }
+            ],
+            institution: "كلية الصيدلة • الجامعة المصرية الصينية (ECU) — Faculty of Pharmacy"
+          }
+        ]
+      },
+
+      en: {
+        headerSub: "Faculty of Pharmacy • Egyptian Chinese University (ECU)",
+        langBtn: "🌐 العربية",
+        downloadBtn: "Download PPTX",
+        prevBtn: "Previous",
+        nextBtn: "Next",
+        slides: [
+          // 1. COVER
+          {
+            type: "cover",
+            badge: "Faculty of Pharmacy • Egyptian Chinese University (ECU)",
+            title: "YoPharma Drug Check",
+            motto: "\"Search it. Understand it. Compare it. Check it.\"",
+            subtitle: "Evidence-Based Clinical Decision Support Platform for the Egyptian Healthcare Market.",
+            meta: [
+              { label: "Project Team", val: "Team PharmaMind", sub: "Clinical Pharmacy Project" },
+              { label: "Domain Track", val: "Clinical Decision Support", sub: "Pharmacology & AI" },
+              { label: "Academic Institution", val: "Egyptian Chinese University (ECU)", sub: "Faculty of Pharmacy" }
+            ],
+            footer: "High-speed clinical triage engine connected to 15,000+ Egyptian drugs with sub-millisecond cache (< 1ms)."
+          },
+
+          // 2. THE PROBLEM
+          {
+            type: "problem",
+            tag: "The Real Clinical Problem",
+            title: "The Problem: Fragmented Sources & Slow Prescription Audit",
+            p1: "When evaluating a prescription with 3 to 5 medications, a pharmacist must verify 6 vital dimensions: drug interactions, meal timing, chronic contraindications, dose adjustments, and local generic alternatives.",
+            p2: "Information is scattered across paper references, US websites that ignore Egyptian trade names, and static price lists. This makes prescription review take 8–10 minutes and risks missing severe interactions.",
+            points: [
+              "1. Foreign websites fail to recognize Egyptian brand names and strengths.",
+              "2. PDF dosage manuals are too slow for renal CrCl calculations.",
+              "3. Local price lists provide zero clinical interaction or safety context.",
+              "4. Outcome: Severe cognitive fatigue and potential dispensing errors."
+            ]
+          },
+
+          // 3. THE UNIFIED SOLUTION
+          {
+            type: "solution",
+            tag: "Unified Solution Vision",
+            title: "The Solution: A Single Integrated Clinical Platform",
+            quote: "\"One platform to explore the medication, understand its risks, compare alternatives, and check the complete regimen in seconds.\"",
+            pillars: [
+              { num: "01", tag: "EXPLORE", title: "Instant Lookup", desc: "Instant retrieval of Egyptian brand data and active INN in < 1ms." },
+              { num: "02", tag: "UNDERSTAND", title: "Mechanism of Risk", desc: "Clear explanation of pharmacokinetic CYP450 pathways with solid triage (🔴/🟠/🔵)." },
+              { num: "03", tag: "COMPARE", title: "Generics & Prices", desc: "Direct chemical equivalence with licensed manufacturers and 3 price tiers." },
+              { num: "04", tag: "CHECK", title: "Regimen Triage", desc: "Simultaneous cross-checking for Drug-Drug, Food, and Chronic risks in 1 click." }
+            ]
+          },
+
+          // 4. TOOL 1: SEARCH
+          {
+            type: "interactive_tool",
+            tag: "Module 1 • Quick Search & Drug Monograph",
+            title: "1. Intelligent Drug Search & Monograph Lookup",
+            problemTitle: "⚠️ The Problem This Module Solves:",
+            problemDesc: "Difficulty remembering 15,000 Egyptian trade and generic names simultaneously while retrieving fast dosage and clinical indications.",
+            solutionTitle: "✨ How it Works in YoPharma:",
+            solutionDesc: "In-memory cached search bar (< 1ms) with instant autocomplete responding live to typing or quick sample clicks.",
+            interactiveType: "search_demo"
+          },
+
+          // 5. TOOL 2: DRUG-DRUG INTERACTIONS
+          {
+            type: "interactive_tool",
+            tag: "Module 2 • Drug-Drug Interaction Checker",
+            title: "2. Drug-Drug Interaction Checker & Risk Triage",
+            problemTitle: "⚠️ The Problem This Module Solves:",
+            problemDesc: "Multi-drug polypharmacy causing unspotted absorption failures or severe systemic toxicities.",
+            solutionTitle: "✨ How it Works in YoPharma:",
+            solutionDesc: "Live prescription builder: toggle drugs into the tray and watch the engine compute interaction severity in real time.",
+            interactiveType: "interactions_demo"
+          },
+
+          // 6. TOOL 3: FOOD INTERACTIONS
+          {
+            type: "interactive_tool",
+            tag: "Module 3 • Food-Drug Timing & Restrictions",
+            title: "3. Meal Timing & Dietary Precautions",
+            problemTitle: "⚠️ The Problem This Module Solves:",
+            problemDesc: "Taking medications with dairy or grapefruit juice reduces absorption by up to 80% or causes severe accumulation toxicity.",
+            solutionTitle: "✨ How it Works in YoPharma:",
+            solutionDesc: "Visual chronology (Empty stomach vs with food) + alert cards for prohibited foods per drug.",
+            interactiveType: "food_demo"
+          },
+
+          // 7. TOOL 4: 22 VITAL SIGNS & BIOMARKERS
+          {
+            type: "interactive_tool",
+            tag: "Module 4 • Laboratory & Vital Biomarkers",
+            title: "4. 22 Clinical Biomarkers & Digital Evaluator",
+            problemTitle: "⚠️ The Problem This Module Solves:",
+            problemDesc: "Memorizing reference ranges for 22 laboratory tests (eGFR, INR, HbA1c, CrCl) and interpreting patient severity in seconds.",
+            solutionTitle: "✨ How it Works in YoPharma:",
+            solutionDesc: "Digital evaluator: select any lab test, type a number, and receive instant diagnostic classification & pharmacy advice.",
+            interactiveType: "vitals_demo"
+          },
+
+          // 8. TOOL 5: EGYPTIAN ALTERNATIVES
+          {
+            type: "interactive_tool",
+            tag: "Module 5 • Egyptian Market Generic Alternatives",
+            title: "5. Egyptian Generic Equivalents & Price Tiers",
+            problemTitle: "⚠️ The Problem This Module Solves:",
+            problemDesc: "Frequent imported medication shortages and high prices with no quick way to map registered local chemical equivalents.",
+            solutionTitle: "✨ How it Works in YoPharma:",
+            solutionDesc: "Pick an original drug to reveal all licensed Egyptian generics with manufacturers and 3 price tiers.",
+            interactiveType: "alternatives_demo"
+          },
+
+          // 9. TOOL 6: CHRONIC DISEASE SAFETY
+          {
+            type: "interactive_tool",
+            tag: "Module 6 • Chronic Disease Safety Evaluator",
+            title: "6. Chronic Disease Safety & Renal Dose Adjustment",
+            problemTitle: "⚠️ The Problem This Module Solves:",
+            problemDesc: "Dispensing common drugs to patients with Hypertension, Diabetes, or CKD causing acute kidney injury or blood pressure spikes.",
+            solutionTitle: "✨ How it Works in YoPharma:",
+            solutionDesc: "Select a drug and chronic condition to view risk level (Safe / Caution / Contraindicated) with renal cutoff guidance.",
+            interactiveType: "chronic_demo"
+          },
+
+          // 10. TOOL 7: SIDE-BY-SIDE COMPARISON
+          {
+            type: "interactive_tool",
+            tag: "Module 7 • Side-by-Side Drug Comparison",
+            title: "7. Head-to-Head Side-by-Side Comparison Matrix",
+            problemTitle: "⚠️ The Problem This Module Solves:",
+            problemDesc: "Clinical dilemma when choosing between two drugs in the same class (e.g. Concor vs Tenormin) regarding side-effect profiles.",
+            solutionTitle: "✨ How it Works in YoPharma:",
+            solutionDesc: "Select comparison pairs to view side-by-side active ingredients, pharmacokinetics, and evidence-based preference verdict.",
+            interactiveType: "compare_demo"
+          },
+
+          // 11. REAL CLINICAL CASE
+          {
+            type: "clinical_case",
+            tag: "Comprehensive Clinical Application",
+            title: "Real Case: Evaluating (Cipro + Antinal + Concor)",
+            profile: "62-year-old male with Hypertension and Chronic Kidney Disease (CKD Stage 3, eGFR = 38 mL/min).",
+            findings: [
+              { badge: "🔴 Drug-Drug Interaction: Cipro ↔ Antinal", desc: "Intestinal chelation & impaired absorption ➔ Management: Separate administration times by at least 2 hours." },
+              { badge: "🍽️ Dietary Restriction: Ciprofloxacin + Dairy", desc: "Calcium reduces fluoroquinolone absorption by 75% ➔ Management: Take on empty stomach away from dairy." },
+              { badge: "🛡️ Renal Impairment: Cipro in CKD Stage 3", desc: "Decreased renal excretion ➔ Management: Reduce dose by 50% (250mg q12h) and monitor serum creatinine." }
+            ]
+          },
+
+          // 12. FINAL TEAM SLIDE
+          {
+            type: "team_slide",
+            tag: "Project Contributors & Academic Team",
+            title: "YoPharma Drug Check",
+            motto: "\"Search it. Understand it. Compare it. Check it.\"",
+            teamTitle: "🏆 Project Contributors & Research Team (Team PharmaMind):",
+            members: [
+              { name: "Youssef Mohamed (يوسف محمد)", role: "Full-Stack Architecture & AI Integration" },
+              { name: "Nour Abdelmageed (نور عبدالمجيد)", role: "Clinical Pharmacy Research & Interaction Matrix" },
+              { name: "Rana Maher (رنا ماهر)", role: "Drug Database Curation & Egyptian Generics" },
+              { name: "Wafaa Taha (وفاء طه)", role: "Biomarkers & Clinical Lab Normal Ranges" },
+              { name: "Nour Gamal (نور جمال)", role: "Food-Drug Interactions & Dietary Guidelines" }
+            ],
+            institution: "Faculty of Pharmacy — Egyptian Chinese University (ECU)"
+          }
+        ]
+      }
+    };
+
+    // DRUGS DATABASE FOR DEMO SANDBOXES
+    const demoDrugDB = {
+      Augmentin: {
+        trade: "Augmentin 1g",
+        inn: "Amoxicillin 875mg + Clavulanic Acid 125mg",
+        mfg: "GlaxoSmithKline (GSK)",
+        dose: "1 tablet every 12 hours with meals",
+        ind: "Respiratory, ENT & Urinary Tract Infections",
+        cat: "Broad Spectrum Penicillin Antibiotic",
+        price: "مرتفع (Original Brand)",
+        food: "مع بداية الوجبة لتقليل الاضطراب المعوي",
+        avoid: "لا توجد موانع حادة مع الأغذية العادية",
+        generics: [
+          { name: "Curam 1g", mfg: "Amoun", tier: "متوسط" },
+          { name: "Hibiotic 1g", mfg: "Amoun", tier: "متوسط" },
+          { name: "Megamox 1g", mfg: "Hikma", tier: "اقتصادي" },
+          { name: "Klavox 1g", mfg: "Spimaco", tier: "اقتصادي" }
+        ]
+      },
+      Concor: {
+        trade: "Concor 5mg / 10mg",
+        inn: "Bisoprolol Fumarate",
+        mfg: "Merck KGaA",
+        dose: "5mg once daily in the morning",
+        ind: "Hypertension, Heart Failure & Angina Pectoris",
+        cat: "Cardioselective Beta-1 Blocker",
+        price: "متوسط",
+        food: "صباحاً مع أو بدون طعام بموعد ثابت",
+        avoid: "تجنب التوقف المفاجئ تجنباً لارتداد الضغط",
+        generics: [
+          { name: "Bisocard 5mg", mfg: "Global Napi", tier: "اقتصادي" },
+          { name: "Bisor 5mg", mfg: "Amoun", tier: "اقتصادي" },
+          { name: "Cardicor 5mg", mfg: "Eva Pharma", tier: "متوسط" }
+        ]
+      },
+      Cataflam: {
+        trade: "Cataflam 50mg",
+        inn: "Diclofenac Potassium",
+        mfg: "Novartis",
+        dose: "50mg 2-3 times daily after meals",
+        ind: "Acute Pain, Dental Pain, Dysmenorrhea & Arthritis",
+        cat: "Non-Steroidal Anti-Inflammatory (NSAID)",
+        price: "متوسط",
+        food: "بعد الأكل مباشرة مع كوب ماء كامل",
+        avoid: "ممنوع على معدة فارغة تجنباً لقرحة المعدة",
+        generics: [
+          { name: "Ofenac 50mg", mfg: "EIPICO", tier: "اقتصادي" },
+          { name: "Declophen 50mg", mfg: "Pharco", tier: "اقتصادي" },
+          { name: "Dolorex 50mg", mfg: "Sedico", tier: "اقتصادي" }
+        ]
+      },
+      Cipro: {
+        trade: "Ciprobay / Cipro 500mg",
+        inn: "Ciprofloxacin HCl",
+        mfg: "Bayer / EIPICO",
+        dose: "500mg every 12 hours",
+        ind: "Severe Bacterial & Complicated UTI Infections",
+        cat: "Fluoroquinolone Antibiotic",
+        price: "متوسط",
+        food: "على معدة فارغة (قبل الأكل بساعة أو بعده بساعتين)",
+        avoid: "🚫 ممنوع تماماً مع منتجات الألبان والكالسيوم",
+        generics: [
+          { name: "Cipromax 500mg", mfg: "EVA Pharma", tier: "اقتصادي" },
+          { name: "Ciprofar 500mg", mfg: "Pharco", tier: "اقتصادي" },
+          { name: "Serviflox 500mg", mfg: "Novartis", tier: "متوسط" }
+        ]
+      },
+      Glucophage: {
+        trade: "Glucophage 1000mg XR",
+        inn: "Metformin Hydrochloride",
+        mfg: "Merck",
+        dose: "1000mg once daily with evening dinner",
+        ind: "Type 2 Diabetes Mellitus & Insulin Resistance",
+        cat: "Biguanide Antidiabetic",
+        price: "اقتصادي",
+        food: "وسط أو بعد وجبة العشاء مباشرة",
+        avoid: "تجنب تفويت الوجبات والامتناع عن السكريات السريعة",
+        generics: [
+          { name: "Cidophage 1000mg", mfg: "CID", tier: "اقتصادي جداً" },
+          { name: "Metfor 1000mg", mfg: "Amoun", tier: "اقتصادي" }
+        ]
+      },
+      Eltroxin: {
+        trade: "Eltroxin 50mcg / 100mcg",
+        inn: "Levothyroxine Sodium",
+        mfg: "Aspen / GSK",
+        dose: "One tablet daily on empty stomach",
+        ind: "Hypothyroidism (قصور الغدة الدرقية)",
+        cat: "Thyroid Hormone Replacement",
+        price: "متوسط",
+        food: "على معدة فارغة قبل الإفطار بـ 45 دقيقة بالماء فقط",
+        avoid: "🚫 تجنب القهوة، الكالسيوم، والحديد لمدة 4 ساعات بعد الجرعة",
+        generics: [
+          { name: "Euthyrox 50mcg", mfg: "Merck", tier: "متوسط" }
+        ]
+      }
+    };
+
+    // INTERACTIVE DEMO SANDBOXES BUILDER
+    function getInteractiveSandbox(type, lang) {
+      const isAr = lang === 'ar';
+
+      // 1. SEARCH TOOL
+      if (type === 'search_demo') {
+        return `
+          <div class="space-y-2.5 text-xs">
+            <div class="relative">
+              <input id="demoSearchInput" type="text" placeholder="${isAr ? 'ابحث عن أي دواء (مثال: Concor, Augmentin)...' : 'Search any medication (e.g. Concor, Augmentin)...'}" 
+                class="w-full bg-slate-900 border border-teal-600/80 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium"
+                value="Augmentin" oninput="handleDemoSearch(this.value)" />
+              <span class="absolute left-3 rtl:left-auto rtl:right-auto rtl:left-3 top-2 text-[9px] bg-slate-800 text-teal-400 px-1.5 py-0.5 rounded font-mono font-bold">Live Search</span>
+            </div>
+
+            <div class="flex flex-wrap gap-1">
+              <span class="text-[10px] text-slate-400 self-center">${isAr ? 'أمثلة جاهزة:' : 'Quick items:'}</span>
+              <button onclick="pickSearchDrug('Augmentin')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-teal-900 text-teal-300 text-[10px] font-bold">Augmentin</button>
+              <button onclick="pickSearchDrug('Concor')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-teal-900 text-teal-300 text-[10px] font-bold">Concor</button>
+              <button onclick="pickSearchDrug('Cataflam')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-teal-900 text-teal-300 text-[10px] font-bold">Cataflam</button>
+              <button onclick="pickSearchDrug('Eltroxin')" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-teal-900 text-teal-300 text-[10px] font-bold">Eltroxin</button>
+            </div>
+
+            <!-- Monograph Card -->
+            <div id="demoMonographCard" class="p-3 rounded-xl bg-slate-900 border border-teal-800/80 space-y-1.5 text-xs">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-1">
+                <div>
+                  <span class="font-extrabold text-teal-300 text-sm block" id="monoTrade">Augmentin 1g Tablets</span>
+                  <span class="text-[10px] text-slate-400 font-mono" id="monoInn">Amoxicillin 875mg + Clavulanic Acid 125mg</span>
+                </div>
+                <span class="text-[9px] bg-teal-950 text-teal-300 border border-teal-700 px-2 py-1 rounded font-bold" id="monoMfg">GSK</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5 text-[11px] pt-0.5">
+                <div><span class="text-slate-400">${isAr ? 'الجرعة الموصى بها:' : 'Standard Dose:'}</span> <strong class="text-white block" id="monoDose">1 tab every 12h with meals</strong></div>
+                <div><span class="text-slate-400">${isAr ? 'التصنيف:' : 'Category:'}</span> <strong class="text-teal-200 block" id="monoCat">Broad Penicillin</strong></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. INTERACTIONS TOOL
+      if (type === 'interactions_demo') {
+        return `
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400 font-bold text-[11px]">${isAr ? 'أضف/احذف أدوية من الروشتة:' : 'Toggle drugs in active Rx:'}</span>
+              <span class="text-[10px] text-teal-400 font-mono" id="rxCountLabel">2 أدوية نشطة</span>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5">
+              <button id="chip_Cipro" onclick="toggleRxDrug('Cipro')" class="px-2.5 py-1 rounded-lg bg-teal-900 border border-teal-500 text-white font-bold text-[11px]">✓ Cipro</button>
+              <button id="chip_Antinal" onclick="toggleRxDrug('Antinal')" class="px-2.5 py-1 rounded-lg bg-teal-900 border border-teal-500 text-white font-bold text-[11px]">✓ Antinal</button>
+              <button id="chip_Warfarin" onclick="toggleRxDrug('Warfarin')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">+ Warfarin</button>
+              <button id="chip_Cataflam" onclick="toggleRxDrug('Cataflam')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">+ Cataflam</button>
+              <button id="chip_Panadol" onclick="toggleRxDrug('Panadol')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">+ Panadol</button>
+              <button id="chip_Concor" onclick="toggleRxDrug('Concor')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">+ Concor</button>
+            </div>
+
+            <div id="rxInteractionOutput" class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-red-800/80 space-y-1">
+              <span class="text-[9px] bg-red-600 text-white font-bold px-1.5 py-0.5 rounded uppercase">🔴 HIGH RISK (تداخل عالي الخطورة)</span>
+              <h5 class="text-xs sm:text-sm font-extrabold text-white">Ciprofloxacin ↔ Antinal</h5>
+              <p class="text-[10px] sm:text-[11px] text-slate-300 leading-relaxed">
+                ${isAr ? 'يحدث التصاق معوي يقلل امتصاص السيبروفلوكساسين بنسبة 60%. التوصية: فصل الجرعات بساعتين.' : 'Intestinal chelation reducing ciprofloxacin absorption by 60%. Action: Separate by 2 hours.'}
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. FOOD INTERACTIONS TOOL
+      if (type === 'food_demo') {
+        return `
+          <div class="space-y-2 text-xs">
+            <span class="text-slate-400 font-bold block text-[11px]">${isAr ? 'اختر الدواء لعرض جدول طعامه ومحاذيره:' : 'Select drug to inspect food schedule:'}</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="pickFoodDrug('Cipro')" class="px-2.5 py-1 rounded-lg bg-teal-900 border border-teal-500 text-white font-bold text-[11px]">Ciprofloxacin</button>
+              <button onclick="pickFoodDrug('Glucophage')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">Glucophage</button>
+              <button onclick="pickFoodDrug('Eltroxin')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">Eltroxin</button>
+              <button onclick="pickFoodDrug('Concor')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">Concor</button>
+              <button onclick="pickFoodDrug('Cataflam')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">Cataflam</button>
+            </div>
+
+            <div id="foodScheduleCard" class="p-2.5 sm:p-3 rounded-xl bg-slate-900 border border-amber-800/80 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-amber-300 text-[11px] sm:text-xs" id="foodTimeBadge">⏰ الموعد: على معدة فارغة</span>
+                <span class="text-[9px] bg-amber-950 border border-amber-700 text-amber-300 px-1.5 py-0.5 rounded font-bold" id="foodTimeTag">قبل الأكل بساعة</span>
+              </div>
+              <div class="p-1.5 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 text-[10px]" id="foodDetails">
+                على معدة فارغة (قبل الأكل بساعة أو بعده بساعتين) مع كوب ماء كامل.
+              </div>
+              <div class="p-1.5 rounded-lg bg-red-950/40 border border-red-900/60 text-red-300 text-[10px]" id="foodAvoid">
+                🚫 <strong>ممنوع تماماً:</strong> منتجات الألبان، الكالسيوم، وعصير الجريب فروت أثناء وقت الجرعة.
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. VITALS & BIOMARKERS TOOL
+      if (type === 'vitals_demo') {
+        return `
+          <div class="space-y-2 text-xs">
+            <div class="flex flex-wrap gap-1">
+              <button onclick="selectVitalsMetric('creatinine')" id="btn_v_creatinine" class="px-2 py-1 rounded bg-teal-900 border border-teal-500 text-white font-bold text-[10px]">الكرياتينين (Creatinine)</button>
+              <button onclick="selectVitalsMetric('hba1c')" id="btn_v_hba1c" class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[10px]">السكر التراكمي (HbA1c)</button>
+              <button onclick="selectVitalsMetric('inr')" id="btn_v_inr" class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[10px]">سيولة الدم (INR)</button>
+              <button onclick="selectVitalsMetric('bp')" id="btn_v_bp" class="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[10px]">ضغط الدم (BP)</button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 items-center">
+              <div>
+                <label class="text-[10px] text-slate-400 font-bold block mb-0.5" id="vitalsInputLabel">${isAr ? 'أدخل قيمة الكرياتينين (mg/dL):' : 'Enter Creatinine (mg/dL):'}</label>
+                <input id="demoVitalsValInput" type="number" step="0.1" value="1.8" oninput="evalVitalsNumber(this.value)"
+                  class="w-full bg-slate-900 border border-teal-600 rounded-lg px-2.5 py-1 text-white font-bold font-mono focus:outline-none text-xs" />
+              </div>
+              <div class="text-[10px] text-slate-400 p-2 rounded-lg bg-slate-900 border border-slate-800" id="vitalsNormalRangeBox">
+                ${isAr ? 'النطاق الطبيعي:' : 'Normal Range:'} <strong class="text-emerald-400 block text-xs">0.6 – 1.2 mg/dL</strong>
+              </div>
+            </div>
+
+            <div id="vitalsOutputCard" class="p-2 sm:p-2.5 rounded-xl bg-red-950/40 border border-red-800 text-xs space-y-0.5">
+              <span class="font-bold text-red-400 block text-xs" id="vitalsStatusBadge">🔴 ${isAr ? 'النتيجة: مرتفع (Renal Warning)' : 'Status: Elevated (Renal Warning)'}</span>
+              <p class="text-[10px] text-slate-300" id="vitalsGuidance">
+                ${isAr ? 'يشير لانخفاض وظائف الكلى (eGFR < 45). يلزم خفض جرعات المضادات ومسكنات NSAIDs بنسبة 50%.' : 'Indicates reduced renal clearance (eGFR < 45). 50% dose reduction required for cleared drugs.'}
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
+      // 5. ALTERNATIVES TOOL
+      if (type === 'alternatives_demo') {
+        return `
+          <div class="space-y-1.5 text-xs">
+            <span class="text-slate-400 font-bold block text-[11px]">${isAr ? 'اختر الدواء الأصلي لعرض بدائله وأسعاره في مصر:' : 'Select brand to inspect Egyptian generics & prices:'}</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="pickAlternativesDrug('Augmentin')" class="px-2.5 py-1 rounded-lg bg-teal-900 border border-teal-500 text-white font-bold text-[11px]">Augmentin 1g</button>
+              <button onclick="pickAlternativesDrug('Concor')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">Concor 5mg</button>
+              <button onclick="pickAlternativesDrug('Cataflam')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">Cataflam 50mg</button>
+              <button onclick="pickAlternativesDrug('Cipro')" class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]">Cipro 500mg</button>
+            </div>
+
+            <div id="alternativesListCard" class="space-y-1 pt-1">
+              <div class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-white text-xs block">Curam 1g Tablets</span>
+                  <span class="text-[10px] text-slate-400">Amoun • Amoxicillin/Clavulanate</span>
+                </div>
+                <span class="text-[9px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-1.5 py-0.5 rounded font-bold">${isAr ? 'سعر متوسط' : 'Moderate'}</span>
+              </div>
+              <div class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-white text-xs block">Hibiotic 1g Tablets</span>
+                  <span class="text-[10px] text-slate-400">Amoun • Amoxicillin/Clavulanate</span>
+                </div>
+                <span class="text-[9px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-1.5 py-0.5 rounded font-bold">${isAr ? 'سعر متوسط' : 'Moderate'}</span>
+              </div>
+              <div class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                <div>
+                  <span class="font-bold text-white text-xs block">Megamox 1g Tablets</span>
+                  <span class="text-[10px] text-slate-400">Hikma • Amoxicillin/Clavulanate</span>
+                </div>
+                <span class="text-[9px] bg-teal-950 text-teal-300 border border-teal-700 px-1.5 py-0.5 rounded font-bold">${isAr ? 'اقتصادي' : 'Economy'}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 6. CHRONIC SAFETY TOOL
+      if (type === 'chronic_demo') {
+        return `
+          <div class="space-y-1.5 text-xs">
+            <span class="text-slate-400 font-bold block text-[11px]">${isAr ? 'اختر الدواء والحالة المزمنة لفحص الأمان السريري:' : 'Select drug & condition for safety review:'}</span>
+            <div class="grid grid-cols-2 gap-1.5">
+              <select id="chronicDrugSelect" onchange="evalChronicDemo()" class="bg-slate-900 border border-teal-600 rounded-lg p-1.5 text-xs text-white font-bold">
+                <option value="Cataflam">Cataflam 50mg (Diclofenac)</option>
+                <option value="Concor">Concor 5mg (Bisoprolol)</option>
+                <option value="Glucophage">Glucophage (Metformin)</option>
+                <option value="Cipro">Ciprofloxacin 500mg</option>
+              </select>
+
+              <select id="chronicCondSelect" onchange="evalChronicDemo()" class="bg-slate-900 border border-teal-600 rounded-lg p-1.5 text-xs text-white font-bold">
+                <option value="ckd">قصور كلوي (CKD)</option>
+                <option value="htn">ارتفاع ضغط الدم (HTN)</option>
+                <option value="asthma">حساسية الصدر (Asthma)</option>
+                <option value="preg">الحمل والرضاعة (Pregnancy)</option>
+              </select>
+            </div>
+
+            <div id="chronicResultCard" class="p-2.5 rounded-xl bg-red-950/40 border border-red-800 space-y-1">
+              <span class="font-bold text-red-400 block text-xs" id="chronicBadge">🚫 ممنوع تماماً (Contraindicated)</span>
+              <p class="text-[10px] text-slate-300" id="chronicReason">
+                مسكنات NSAIDs تمنع تدفق الدم الكلوي وتسبب فشلاً كلوياً حاداً. البديل الآمن: الباراسيتامول (Panadol).
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
+      // 7. COMPARE TOOL
+      if (type === 'compare_demo') {
+        return `
+          <div class="space-y-1.5 text-xs">
+            <span class="text-slate-400 font-bold block text-[11px]">${isAr ? 'اختر مقارنة دوائية مباشرة وجهاً لوجه:' : 'Select head-to-head comparison pair:'}</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="pickComparePair('beta')" class="px-2 py-1 rounded-lg bg-teal-900 border border-teal-500 text-white font-bold text-[10px]">Concor vs Tenormin</button>
+              <button onclick="pickComparePair('nsaid')" class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[10px]">Cataflam vs Brufen</button>
+              <button onclick="pickComparePair('abx')" class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[10px]">Augmentin vs Zithromax</button>
+            </div>
+
+            <div id="compareMatrixOutput" class="p-2 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+              <div class="grid grid-cols-2 gap-1.5 text-center">
+                <div class="p-1 rounded bg-slate-950 border border-teal-600">
+                  <span class="font-bold text-teal-300 block text-xs" id="compA_Name">Concor 5mg</span>
+                  <span class="text-[9px] text-slate-400" id="compA_Inn">Bisoprolol (B1 selective)</span>
+                </div>
+                <div class="p-1 rounded bg-slate-950 border border-sky-600">
+                  <span class="font-bold text-sky-300 block text-xs" id="compB_Name">Tenormin 50mg</span>
+                  <span class="text-[9px] text-slate-400" id="compB_Inn">Atenolol (Renal Excreted)</span>
+                </div>
+              </div>
+
+              <div class="space-y-0.5 text-[10px] border-t border-slate-800 pt-1">
+                <div class="flex justify-between text-slate-300">
+                  <span>${isAr ? 'التخلص الحيوي:' : 'Elimination:'}</span>
+                  <span class="font-bold text-teal-300" id="compElim">50% كبدي / 50% كلوي</span>
+                </div>
+                <div class="p-1 rounded bg-teal-950/40 border border-teal-800 text-teal-200 text-[10px]" id="compVerdict">
+                  💡 <strong>التوصية:</strong> يُفضل Concor لمرضى الكلى والشعب الهوائية لاستقراره الدوائي وتوازنه.
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      return ``;
+    }
+
+    // SLIDE BUILDER
+    function buildSlideHTML(slide, lang) {
+      const isAr = lang === 'ar';
+      const textDir = isAr ? 'text-right' : 'text-left';
+
+      if (slide.type === 'cover') {
+        return `
+          <div class="slide active w-full flex flex-col justify-center items-center text-center space-y-3 sm:space-y-6 my-auto py-2">
+            <div class="inline-flex items-center gap-1.5 px-3 sm:px-5 py-1 sm:py-2 rounded-full bg-teal-950 border border-teal-700 text-teal-300 text-[10px] sm:text-sm font-bold shadow-md">
+              <span>${slide.badge}</span>
+            </div>
+            
+            <h1 class="text-3xl sm:text-6xl md:text-7xl font-black text-white leading-tight tracking-tight">
+              YoPharma <span class="text-teal-400">Drug Check</span>
+            </h1>
+
+            <p class="text-sm sm:text-2xl text-teal-200 font-bold italic max-w-3xl">
+              ${slide.motto}
+            </p>
+
+            <p class="text-xs sm:text-base text-slate-300 max-w-3xl leading-relaxed font-medium px-2">
+              ${slide.subtitle}
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4 w-full max-w-4xl pt-1">
+              ${slide.meta.map(m => `
+                <div class="p-3 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-800 ${textDir} shadow-md space-y-0.5 sm:space-y-1">
+                  <span class="text-[10px] sm:text-xs text-teal-400 font-bold block uppercase tracking-wider">${m.label}</span>
+                  <span class="text-xs sm:text-base font-extrabold text-white block">${m.val}</span>
+                  <span class="text-[10px] sm:text-xs text-slate-400 block">${m.sub}</span>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="p-2 sm:p-3 rounded-xl bg-teal-950/40 border border-teal-800/60 max-w-3xl text-[10px] sm:text-xs text-teal-200 font-medium">
+              ${slide.footer}
+            </div>
+          </div>
+        `;
+      }
+
+      if (slide.type === 'problem') {
+        return `
+          <div class="slide active w-full flex flex-col justify-center space-y-3 sm:space-y-5 ${textDir} my-auto py-2">
+            <div class="border-b border-slate-800 pb-1.5">
+              <span class="text-[11px] text-red-400 font-bold uppercase tracking-wider">${slide.tag}</span>
+              <h2 class="text-base sm:text-3xl font-black text-white mt-0.5">${slide.title}</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 items-stretch">
+              <div class="lg:col-span-6 p-3.5 sm:p-6 rounded-2xl bg-red-950/20 border border-red-900/50 space-y-2.5 shadow-md flex flex-col justify-between">
+                <div class="space-y-1.5">
+                  <span class="text-xs sm:text-sm font-bold text-red-400 block uppercase">⚠️ واقع الممارسة والتحديات:</span>
+                  <p class="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">${slide.p1}</p>
+                </div>
+                <div class="p-2.5 sm:p-4 rounded-xl bg-slate-900 border border-slate-800">
+                  <p class="text-[11px] sm:text-sm text-slate-300 leading-relaxed font-medium">${slide.p2}</p>
+                </div>
+              </div>
+
+              <div class="lg:col-span-6 p-3.5 sm:p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 shadow-md">
+                <span class="text-xs sm:text-sm font-bold text-teal-300 block">📱 أسباب قصور المصادر الحالية:</span>
+                <div class="space-y-1.5 text-xs sm:text-sm">
+                  ${slide.points.map(p => `
+                    <div class="p-2 sm:p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 font-medium">${p}</div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (slide.type === 'solution') {
+        return `
+          <div class="slide active w-full flex flex-col justify-center space-y-3 sm:space-y-5 ${textDir} my-auto py-2">
+            <div class="border-b border-slate-800 pb-1.5">
+              <span class="text-[11px] text-teal-400 font-bold uppercase tracking-wider">${slide.tag}</span>
+              <h2 class="text-base sm:text-3xl font-black text-white mt-0.5">${slide.title}</h2>
+            </div>
+
+            <div class="p-3 sm:p-5 rounded-2xl bg-gradient-to-r from-teal-950 to-slate-900 border border-teal-700 text-center space-y-1 shadow-md">
+              <p class="text-xs sm:text-xl font-black text-white">${slide.quote}</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+              ${slide.pillars.map(p => `
+                <div class="p-3 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-teal-700 transition-all space-y-1 shadow-sm">
+                  <span class="text-[10px] font-bold text-teal-400 block uppercase tracking-wider">${p.tag}</span>
+                  <h4 class="text-xs sm:text-base font-extrabold text-white">${p.title}</h4>
+                  <p class="text-[11px] sm:text-sm text-slate-300 leading-relaxed font-medium">${p.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (slide.type === 'interactive_tool') {
+        return `
+          <div class="slide active w-full flex flex-col justify-center space-y-2.5 sm:space-y-3.5 ${textDir} my-auto py-1">
+            <div class="border-b border-slate-800 pb-1.5">
+              <span class="text-[10px] sm:text-xs text-teal-400 font-bold uppercase tracking-wider">${slide.tag}</span>
+              <h2 class="text-sm sm:text-2xl font-black text-white mt-0.5">${slide.title}</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-4 items-stretch">
+              <!-- Left: Problem & Solution Explanation -->
+              <div class="lg:col-span-6 p-3 sm:p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between space-y-2 shadow-md">
+                <div class="space-y-1">
+                  <span class="text-[11px] sm:text-sm font-bold text-red-400 block uppercase">${slide.problemTitle}</span>
+                  <p class="text-[11px] sm:text-sm text-slate-200 leading-relaxed font-medium">${slide.problemDesc}</p>
+                </div>
+
+                <div class="space-y-1 pt-1.5 border-t border-slate-800">
+                  <span class="text-[11px] sm:text-sm font-bold text-teal-400 block uppercase">${slide.solutionTitle}</span>
+                  <p class="text-[11px] sm:text-sm text-slate-200 leading-relaxed font-medium">${slide.solutionDesc}</p>
+                </div>
+
+                <div class="p-2 rounded-xl bg-teal-950/40 border border-teal-800/60 text-teal-300 text-[10px] text-center font-bold">
+                  ✨ يمكنك تجربة هذه الخانة بالكامل في النموذج المجاور 👈
+                </div>
+              </div>
+
+              <!-- Right: Live Interactive Sandbox -->
+              <div class="lg:col-span-6 p-3 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col justify-between space-y-1.5 shadow-md">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-1">
+                  <span class="text-[11px] font-bold text-teal-300 flex items-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>${isAr ? 'تجربة حية تفاعلية داخل الشريحة:' : 'Interactive In-Slide Sandbox:'}</span>
+                  </span>
+                  <span class="text-[9px] bg-slate-800 text-teal-300 px-2 py-0.5 rounded font-mono">100% Live Demo</span>
+                </div>
+
+                ${getInteractiveSandbox(slide.interactiveType, lang)}
+
+                <div class="text-[9px] text-slate-500 text-center pt-0.5 border-t border-slate-900">
+                  ${isAr ? 'تحديث وتفاعل فوري بدون مغادرة العرض' : 'Realtime response without leaving deck'}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (slide.type === 'clinical_case') {
+        return `
+          <div class="slide active w-full flex flex-col justify-center space-y-2.5 sm:space-y-3.5 ${textDir} my-auto py-2">
+            <div class="border-b border-slate-800 pb-1.5 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] sm:text-xs text-teal-400 font-bold uppercase tracking-wider">${slide.tag}</span>
+                <h2 class="text-sm sm:text-2xl font-black text-white mt-0.5">${slide.title}</h2>
+              </div>
+            </div>
+
+            <div class="p-2.5 sm:p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs sm:text-sm text-slate-200 font-bold">
+              👤 ${slide.profile}
+            </div>
+
+            <div class="space-y-1.5 sm:space-y-2">
+              ${slide.findings.map(f => `
+                <div class="p-2.5 sm:p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-0.5 text-xs sm:text-sm">
+                  <span class="font-extrabold text-teal-300 block text-[11px] sm:text-sm">${f.badge}</span>
+                  <p class="text-slate-300 font-medium text-[11px] sm:text-sm">${f.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (slide.type === 'team_slide') {
+        return `
+          <div class="slide active w-full flex flex-col justify-center items-center text-center space-y-3 sm:space-y-5 my-auto py-2">
+            <div class="inline-flex items-center gap-1.5 px-3 sm:px-5 py-1 sm:py-2 rounded-full bg-teal-950 border border-teal-700 text-teal-300 text-[10px] sm:text-sm font-bold shadow-md">
+              <span>🏆 ${slide.tag}</span>
+            </div>
+
+            <div>
+              <h2 class="text-2xl sm:text-5xl font-black text-white tracking-tight">
+                ${slide.title}
+              </h2>
+              <p class="text-xs sm:text-xl text-teal-200 font-bold italic mt-0.5">
+                ${slide.motto}
+              </p>
+            </div>
+
+            <!-- Team Members 5-Card Grid -->
+            <div class="p-3.5 sm:p-6 rounded-2xl bg-slate-900/95 border border-slate-800 max-w-4xl w-full ${textDir} space-y-2.5 sm:space-y-3.5 shadow-xl">
+              <span class="text-xs sm:text-sm font-bold text-teal-300 block uppercase tracking-wider">${slide.teamTitle}</span>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
+                ${slide.members.map((m, idx) => `
+                  <div class="p-2.5 sm:p-3.5 rounded-xl bg-slate-950 border border-teal-800/60 space-y-0.5 shadow-sm">
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                      <span class="w-5 h-5 rounded-full bg-teal-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">${idx + 1}</span>
+                      <span class="font-extrabold text-white text-xs sm:text-sm">${m.name}</span>
+                    </div>
+                    <span class="text-[10px] text-slate-300 block px-1">${m.role}</span>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div class="pt-1.5 border-t border-slate-800 text-center text-[11px] sm:text-xs font-bold text-teal-300">
+                ${slide.institution}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      return ``;
+    }
+
+    function renderPresentation() {
+      const data = presentationData[currentLang];
+      const slide = data.slides[currentSlide];
+
+      document.getElementById('slideCanvas').innerHTML = buildSlideHTML(slide, currentLang);
+      document.getElementById('headerSub').textContent = data.headerSub;
+      document.getElementById('langBtnText').textContent = data.langBtn;
+      document.getElementById('downloadBtnText').textContent = data.downloadBtn;
+      document.getElementById('prevBtnText').textContent = data.prevBtn;
+      document.getElementById('nextBtnText').textContent = data.nextBtn;
+
+      document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${data.slides.length}`;
+
+      const dotsContainer = document.getElementById('dotsContainer');
+      dotsContainer.innerHTML = data.slides.map((_, i) => `
+        <button class="dot w-2 sm:w-3 h-2 sm:h-3 rounded-full shrink-0 transition-all ${i === currentSlide ? 'bg-teal-400 scale-125' : 'bg-slate-700'}" onclick="goToSlide(${i})"></button>
+      `).join('');
+
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === data.slides.length - 1;
+
+      document.getElementById('slideCanvas').scrollTop = 0;
+    }
+
+    // INTERACTIVE SANDBOX LOGIC FOR ALL TOOLS
+    window.handleDemoSearch = function(query) {
+      const q = (query || '').trim().toLowerCase();
+      let matchedKey = 'Augmentin';
+
+      for (let k of Object.keys(demoDrugDB)) {
+        if (k.toLowerCase().includes(q) || q.includes(k.toLowerCase())) {
+          matchedKey = k;
+          break;
+        }
+      }
+      pickSearchDrug(matchedKey);
+    };
+
+    window.pickSearchDrug = function(key) {
+      const drug = demoDrugDB[key] || demoDrugDB['Augmentin'];
+      const inp = document.getElementById('demoSearchInput');
+      if (inp) inp.value = key;
+
+      const card = document.getElementById('demoMonographCard');
+      if (!card) return;
+
+      document.getElementById('monoTrade').textContent = drug.trade;
+      document.getElementById('monoInn').textContent = drug.inn;
+      document.getElementById('monoMfg').textContent = drug.mfg;
+      document.getElementById('monoDose').textContent = drug.dose;
+      document.getElementById('monoCat').textContent = drug.cat;
+    };
+
+    window.toggleRxDrug = function(drugName) {
+      const idx = selectedRxDrugs.indexOf(drugName);
+      if (idx > -1) {
+        if (selectedRxDrugs.length > 1) selectedRxDrugs.splice(idx, 1);
+      } else {
+        selectedRxDrugs.push(drugName);
+      }
+
+      // Update button styling
+      ['Cipro', 'Antinal', 'Warfarin', 'Cataflam', 'Panadol', 'Concor'].forEach(d => {
+        const btn = document.getElementById(`chip_${d}`);
+        if (btn) {
+          if (selectedRxDrugs.includes(d)) {
+            btn.className = 'px-2.5 py-1 rounded-lg bg-teal-900 border border-teal-500 text-white font-bold text-[11px]';
+            btn.textContent = `✓ ${d}`;
+          } else {
+            btn.className = 'px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[11px]';
+            btn.textContent = `+ ${d}`;
+          }
+        }
+      });
+
+      const countLabel = document.getElementById('rxCountLabel');
+      if (countLabel) countLabel.textContent = `${selectedRxDrugs.length} أدوية نشطة`;
+
+      // Evaluate Interactions
+      const out = document.getElementById('rxInteractionOutput');
+      if (!out) return;
+
+      const isAr = currentLang === 'ar';
+      const hasWarfarin = selectedRxDrugs.includes('Warfarin');
+      const hasCataflam = selectedRxDrugs.includes('Cataflam');
+      const hasCipro = selectedRxDrugs.includes('Cipro');
+      const hasAntinal = selectedRxDrugs.includes('Antinal');
+
+      if (hasWarfarin && hasCataflam) {
+        out.className = 'p-2.5 sm:p-3 rounded-xl bg-red-950/50 border border-red-700 space-y-1';
+        out.innerHTML = `
+          <span class="text-[9px] bg-red-600 text-white font-bold px-1.5 py-0.5 rounded uppercase">🔴 SEVERE (خطر نزيف حاد)</span>
+          <h5 class="text-xs sm:text-sm font-extrabold text-white">Warfarin ↔ Cataflam (Diclofenac)</h5>
+          <p class="text-[10px] sm:text-[11px] text-slate-300 leading-relaxed">
+            ${isAr ? 'تنافس شديد على بروتينات البلازما وتهتك بطانة المعدة ➔ نزيف حاد. التوصية: تجنب التزامن واستبدله بـ Panadol.' : 'Severe protein displacement & GI ulceration risk. Action: Strictly avoid; substitute with Paracetamol.'}
+          </p>
+        `;
+      } else if (hasCipro && hasAntinal) {
+        out.className = 'p-2.5 sm:p-3 rounded-xl bg-red-950/50 border border-red-700 space-y-1';
+        out.innerHTML = `
+          <span class="text-[9px] bg-red-600 text-white font-bold px-1.5 py-0.5 rounded uppercase">🔴 HIGH RISK (تداخل عالي الخطورة)</span>
+          <h5 class="text-xs sm:text-sm font-extrabold text-white">Ciprofloxacin ↔ Antinal</h5>
+          <p class="text-[10px] sm:text-[11px] text-slate-300 leading-relaxed">
+            ${isAr ? 'التصاق معوي يقلل امتصاص السيبروفلوكساسين بنسبة 60%. التوصية: فصل الجرعات بساعتين على الأقل.' : 'Intestinal chelation reducing ciprofloxacin absorption by 60%. Action: Separate by 2 hours.'}
+          </p>
+        `;
+      } else {
+        out.className = 'p-2.5 sm:p-3 rounded-xl bg-emerald-950/40 border border-emerald-700 space-y-1';
+        out.innerHTML = `
+          <span class="text-[9px] bg-emerald-600 text-white font-bold px-1.5 py-0.5 rounded uppercase">🟢 SAFE (مزيج آمن)</span>
+          <h5 class="text-xs sm:text-sm font-extrabold text-white">${selectedRxDrugs.join(' + ')}</h5>
+          <p class="text-[10px] sm:text-[11px] text-slate-300 leading-relaxed">
+            ${isAr ? 'لا توجد تعارضات فارماكولوجية خطيرة بين هذه الأدوية المحددة.' : 'No severe pharmacological cross-reactions detected for current selection.'}
+          </p>
+        `;
+      }
+    };
+
+    window.pickFoodDrug = function(key) {
+      const drug = demoDrugDB[key] || demoDrugDB['Cipro'];
+      const card = document.getElementById('foodScheduleCard');
+      if (!card) return;
+
+      document.getElementById('foodTimeBadge').textContent = `⏰ الموعد: ${drug.food}`;
+      document.getElementById('foodDetails').textContent = `الجرعة وطريقة الأخذ: ${drug.dose} — ${drug.food}`;
+      document.getElementById('foodAvoid').innerHTML = `🚫 <strong>المحاذير:</strong> ${drug.avoid}`;
+    };
+
+    window.selectVitalsMetric = function(metric) {
+      selectedVitalsMetric = metric;
+      ['creatinine', 'hba1c', 'inr', 'bp'].forEach(m => {
+        const btn = document.getElementById(`btn_v_${m}`);
+        if (btn) {
+          if (m === metric) {
+            btn.className = 'px-2 py-1 rounded bg-teal-900 border border-teal-500 text-white font-bold text-[10px]';
+          } else {
+            btn.className = 'px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300 font-bold text-[10px]';
+          }
+        }
+      });
+
+      const inp = document.getElementById('demoVitalsValInput');
+      const lbl = document.getElementById('vitalsInputLabel');
+      const norm = document.getElementById('vitalsNormalRangeBox');
+
+      if (metric === 'creatinine') {
+        lbl.textContent = 'أدخل الكرياتينين (mg/dL):';
+        inp.value = '1.8';
+        norm.innerHTML = 'النطاق الطبيعي: <strong class="text-emerald-400 block text-xs">0.6 – 1.2 mg/dL</strong>';
+      } else if (metric === 'hba1c') {
+        lbl.textContent = 'أدخل السكر التراكمي (%):';
+        inp.value = '8.5';
+        norm.innerHTML = 'النطاق المستهدف: <strong class="text-emerald-400 block text-xs">< 6.5 %</strong>';
+      } else if (metric === 'inr') {
+        lbl.textContent = 'أدخل سيولة الدم (INR):';
+        inp.value = '3.8';
+        norm.innerHTML = 'الهدف العلاجي: <strong class="text-emerald-400 block text-xs">2.0 – 3.0</strong>';
+      } else if (metric === 'bp') {
+        lbl.textContent = 'أدخل الضغط الانقباضي (mmHg):';
+        inp.value = '155';
+        norm.innerHTML = 'الضغط المثالي: <strong class="text-emerald-400 block text-xs">< 120/80 mmHg</strong>';
+      }
+      evalVitalsNumber(inp.value);
+    };
+
+    window.evalVitalsNumber = function(val) {
+      const n = parseFloat(val) || 0;
+      const badge = document.getElementById('vitalsStatusBadge');
+      const guide = document.getElementById('vitalsGuidance');
+      const card = document.getElementById('vitalsOutputCard');
+      if (!badge || !guide || !card) return;
+
+      if (selectedVitalsMetric === 'creatinine') {
+        if (n <= 1.2) {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-emerald-400 block text-xs';
+          badge.textContent = '🟢 النتيجة: طبيعي (eGFR > 90)';
+          guide.textContent = 'وظائف الكلى سليمة ولا تحتاج لتعديل جرعات الأدوية.';
+        } else {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-red-950/40 border border-red-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-red-400 block text-xs';
+          badge.textContent = '🔴 النتيجة: مرتفع (Renal Warning)';
+          guide.textContent = 'يشير لانخفاض وظائف الكلى (eGFR < 45). يلزم خفض جرعات المضادات ومسكنات NSAIDs بنسبة 50%.';
+        }
+      } else if (selectedVitalsMetric === 'hba1c') {
+        if (n < 7.0) {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-emerald-400 block text-xs';
+          badge.textContent = '🟢 السكر منضبط (Good Glycemic Control)';
+          guide.textContent = 'استمر على نفس الخطة العلاجية والجرعات الحالية.';
+        } else {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-amber-950/40 border border-amber-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-amber-400 block text-xs';
+          badge.textContent = '🟠 السكر غير منضبط (Uncontrolled Diabetes)';
+          guide.textContent = 'يلزم مراجعة الطبيب لإضافة دواء مساعد أو تعديل جرعة الأنسولين/الميتفورمين.';
+        }
+      } else if (selectedVitalsMetric === 'inr') {
+        if (n >= 2.0 && n <= 3.0) {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-emerald-400 block text-xs';
+          badge.textContent = '🟢 سيولة الدم مثالية (Target INR 2-3)';
+          guide.textContent = 'جرعة الوارفارين الحالية آمنة وتحقق الحماية المطلوبة.';
+        } else {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-red-950/40 border border-red-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-red-400 block text-xs';
+          badge.textContent = '🔴 خطر نزيف (Elevated Bleeding Risk)';
+          guide.textContent = 'السيولة أعلى من النطاق العلاجي؛ يلزم خفض جرعة الوارفارين وتجنب المسكنات تماماً.';
+        }
+      } else if (selectedVitalsMetric === 'bp') {
+        if (n < 130) {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-emerald-400 block text-xs';
+          badge.textContent = '🟢 ضغط الدم طبيعي ومستقر';
+          guide.textContent = 'استقرار ممتاز بفضل الالتزام بالعلاج ومثبطات بيتا.';
+        } else {
+          card.className = 'p-2 sm:p-2.5 rounded-xl bg-red-950/40 border border-red-800 text-xs space-y-0.5';
+          badge.className = 'font-bold text-red-400 block text-xs';
+          badge.textContent = '🔴 ارتفاع ضغط الدم (Stage 2 HTN)';
+          guide.textContent = 'يلزم تقليل الصوديوم وتجنب مسكنات NSAIDs التي تعطل فاعلية أدوية الضغط.';
+        }
+      }
+    };
+
+    window.pickAlternativesDrug = function(key) {
+      const drug = demoDrugDB[key] || demoDrugDB['Augmentin'];
+      const card = document.getElementById('alternativesListCard');
+      if (!card) return;
+
+      card.innerHTML = drug.generics.map(g => `
+        <div class="p-1.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-white text-xs block">${g.name}</span>
+            <span class="text-[10px] text-slate-400">${g.mfg} • ${drug.inn}</span>
+          </div>
+          <span class="text-[9px] ${g.tier.includes('اقتصادي') ? 'bg-teal-950 text-teal-300 border border-teal-700' : 'bg-emerald-950 text-emerald-300 border border-emerald-700'} px-1.5 py-0.5 rounded font-bold">${g.tier}</span>
+        </div>
+      `).join('');
+    };
+
+    window.evalChronicDemo = function() {
+      const drug = document.getElementById('chronicDrugSelect')?.value;
+      const cond = document.getElementById('chronicCondSelect')?.value;
+      const badge = document.getElementById('chronicBadge');
+      const reason = document.getElementById('chronicReason');
+      const card = document.getElementById('chronicResultCard');
+      if (!badge || !reason || !card) return;
+
+      if (drug === 'Cataflam' && (cond === 'ckd' || cond === 'htn')) {
+        card.className = 'p-2.5 rounded-xl bg-red-950/40 border border-red-800 space-y-1';
+        badge.className = 'font-bold text-red-400 block text-xs';
+        badge.textContent = '🚫 ممنوع تماماً (Contraindicated)';
+        reason.textContent = 'مسكنات NSAIDs تمنع تدفق الدم الكلوي وترفع الضغط بنسبة 15mmHg. البديل: Panadol.';
+      } else if (drug === 'Glucophage' && cond === 'ckd') {
+        card.className = 'p-2.5 rounded-xl bg-red-950/40 border border-red-800 space-y-1';
+        badge.className = 'font-bold text-red-400 block text-xs';
+        badge.textContent = '🚫 ممنوع إذا كان eGFR < 30 (Lactic Acidosis)';
+        reason.textContent = 'خطر تراكم حمض اللاكتيك في الدم مع انخفاض وظائف الكلى. البديل: مثبطات DPP-4.';
+      } else if (drug === 'Concor' && cond === 'asthma') {
+        card.className = 'p-2.5 rounded-xl bg-amber-950/40 border border-amber-800 space-y-1';
+        badge.className = 'font-bold text-amber-400 block text-xs';
+        badge.textContent = '🟠 حذر شديد (Caution in Severe Asthma)';
+        reason.textContent = 'رغم انتقائيته لـ B1، الجرعات العالية قد تسبب تقلص الشعب الهوائية.';
+      } else {
+        card.className = 'p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800 space-y-1';
+        badge.className = 'font-bold text-emerald-400 block text-xs';
+        badge.textContent = '🟢 آمن تحت المتابعة الدورية (Safe)';
+        reason.textContent = 'لا توجد موانع مباشرة؛ الدواء مناسب ومصنف كخيار علاجي معتمد للحالة.';
+      }
+    };
+
+    window.pickComparePair = function(type) {
+      const compA_Name = document.getElementById('compA_Name');
+      const compA_Inn = document.getElementById('compA_Inn');
+      const compB_Name = document.getElementById('compB_Name');
+      const compB_Inn = document.getElementById('compB_Inn');
+      const compElim = document.getElementById('compElim');
+      const compVerdict = document.getElementById('compVerdict');
+      if (!compA_Name) return;
+
+      if (type === 'nsaid') {
+        compA_Name.textContent = 'Cataflam 50mg';
+        compA_Inn.textContent = 'Diclofenac Pot. (Fast Onset)';
+        compB_Name.textContent = 'Brufen 400mg';
+        compB_Inn.textContent = 'Ibuprofen (Mild Analgesic)';
+        compElim.textContent = 'كبدي 60% / كلوي 40%';
+        compVerdict.innerHTML = '💡 <strong>التوصية:</strong> Cataflam أسرع في تسكين آلام الأسنان والمغص، بينما Brufen ألطف على المعدة.';
+      } else if (type === 'abx') {
+        compA_Name.textContent = 'Augmentin 1g';
+        compA_Inn.textContent = 'Amoxicillin/Clavulanate';
+        compB_Name.textContent = 'Zithromax 500mg';
+        compB_Inn.textContent = 'Azithromycin (Macrolide)';
+        compElim.textContent = 'أوجمنتين (كلوي) / زيثروماكس (كبدي)';
+        compVerdict.innerHTML = '💡 <strong>التوصية:</strong> Zithromax خيار مثالي لمرضى حساسية البنسلين وجرعته سهلة (قرص يومياً لمدة 3 أيام).';
+      } else {
+        compA_Name.textContent = 'Concor 5mg';
+        compA_Inn.textContent = 'Bisoprolol (B1 selective)';
+        compB_Name.textContent = 'Tenormin 50mg';
+        compB_Inn.textContent = 'Atenolol (Renal Excreted)';
+        compElim.textContent = '50% كبدي / 50% كلوي';
+        compVerdict.innerHTML = '💡 <strong>التوصية:</strong> يُفضل Concor لمرضى الكلى والشعب الهوائية لاستقراره الدوائي وتوازنه.';
+      }
+    };
+
+    function nextSlide() {
+      const data = presentationData[currentLang];
+      if (currentSlide < data.slides.length - 1) {
+        currentSlide++;
+        renderPresentation();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderPresentation();
+      }
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      renderPresentation();
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+    document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+    document.getElementById('langToggleBtn').addEventListener('click', () => {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      const root = document.getElementById('htmlRoot');
+      if (currentLang === 'ar') {
+        root.setAttribute('dir', 'rtl');
+        root.setAttribute('lang', 'ar');
+      } else {
+        root.setAttribute('dir', 'ltr');
+        root.setAttribute('lang', 'en');
+      }
+      renderPresentation();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+        if (currentLang === 'ar') prevSlide(); else nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === ' ') {
+        if (currentLang === 'ar') nextSlide(); else prevSlide();
+      }
+    });
+
+    // Touch swipe handling (Reversed / Inverted direction)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      // Inverted swipe logic: swipe right -> nextSlide(), swipe left -> prevSlide()
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 35) {
+        if (deltaX > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }, { passive: true });
+
+    renderPresentation();
+  </script>
+</body>
+</html>
