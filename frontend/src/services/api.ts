@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const PUBLIC_CLOUD_API = 'https://earrings-forecast-latina-ozone.trycloudflare.com';
+export const PUBLIC_CLOUD_API = 'https://yo-pharma-app-mobile.vercel.app';
 export const LOCAL_LAN_API = 'http://192.168.1.39:5050';
 
 let cachedActiveUrl: string | null = null;
